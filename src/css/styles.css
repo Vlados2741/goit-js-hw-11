@@ -31,7 +31,7 @@ input {
   height: 30px;
   margin-top: 10px;
 }
-button {
+.search {
   position: absolute;
   top: 10px;
   left: 220px;
@@ -60,14 +60,21 @@ button {
   margin-left: 6px;
   margin-right: 6px;
 }
-.load-more {
+ .load-more {
+   display: block;
+   width: 110px;
+   margin-right: auto;
+   margin-left: auto;
+
+   padding: 10px 20px;
+
+   border: transparent;
+   border-radius: 4px;
+   background-color: transparent;
+   cursor: pointer;
+ }
+
+.ishidden {
   display: none;
-  position: absolute;
-  left: 50%;
-  top: 90%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 25px;
-  background: transparent;
-  border: none;
 }
+
