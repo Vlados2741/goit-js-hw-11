@@ -34,13 +34,14 @@ refs.loadMore.classList.add('ishidden');
 function onFormSubmit(e) {    
   e.preventDefault();
 const searchName = e.currentTarget.elements.searchQuery.value.trim();
-if (searchName === 0 ) {
+if (searchName === "" ) {
   return;
 } else {
 clearGalleryList();
 currentPage = 1;
 fetchRequest (searchName, currentPage); 
   };
+e.currentTarget.elements.searchQuery.value = ""
 };
 
 
@@ -53,8 +54,9 @@ function onLoadMoreBtn() {
 async function fetchRequest (searchQuery, currentPage) {
   try {
     const fetchResult = await fetchPictures(searchQuery, currentPage);  
-    if (currentPage === 1) {
+    if (fetchResult.totalHits > 1 && currentPage === 1) {
       Notiflix.Notify.info(`Hooray! We found ${fetchResult.totalHits} images.`);
+      refs.loadMore.classList.add('ishidden');
     };
     filterFetchResult(fetchResult);
   } catch (error) {
@@ -65,10 +67,12 @@ async function fetchRequest (searchQuery, currentPage) {
 function filterFetchResult(fetchResult) {
   if (currentPage === Math.ceil(fetchResult.totalHits / 40)) {
       insertMarkup(fetchResult.hits);  
-      Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
+    Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
+    refs.loadMore.classList.add('ishidden');
       return;
   } else if (fetchResult.total === 0) {
-      Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");   
+    Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+    refs.loadMore.classList.add('ishidden');
       return;
   } else { 
       insertMarkup(fetchResult.hits);  
